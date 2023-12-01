@@ -1,0 +1,14 @@
+<!-- dashboard.html -->
+<h2>Активные пользователи</h2>
+<ul>
+  {% for activity in user_activities %}
+    <li>{{ activity.user.username }} - {{ activity.start_time }} до {% if activity.end_time %}{{ activity.end_time }}{% else %}в настоящее время{% endif %}</li>
+  {% endfor %}
+</ul>
+
+<h2>Активные шкафы</h2>
+<ul>
+  {% for cabinet in active_cabinets %}
+    <li>Шкаф №{{ cabinet.number }} - Занят</li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,12 @@
+<!-- registration.html -->
+<form method="post" action="{% url 'registration' %}">
+  {% csrf_token %}
+  <label for="cabinet_number">Выберите свободный шкаф:</label>
+  <select name="cabinet_number" required>
+    {% for cabinet in cabinets %}
+      <option value="{{ cabinet.number }}">{{ cabinet.number }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Зарегистрироваться</button>
+</form>
+

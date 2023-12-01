@@ -1,0 +1,54 @@
+<!-- combined_template.html -->
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<!-- Регистрация -->
+<form method="post">
+    {% csrf_token %}
+    <label for="cabinet_number">Choose a cabinet:</label>
+    <select name="cabinet_number" id="cabinet_number">
+        {% for cabinet in cabinets %}
+            <option value="{{ cabinet.number }}">{{ cabinet.number }}</option>
+        {% empty %}
+            <option>No cabinets available</option>
+        {% endfor %}
+    </select>
+    <button type="submit" name="register_action">Register</button>
+</form>
+
+<!-- Панель управления -->
+<div>
+    <h2>Active Cabinets</h2>
+    {% for cabinet in active_cabinets %}
+        <p>Cabinet Number: {{ cabinet.number }}</p>
+    {% empty %}
+        <p>No active cabinets</p>
+    {% endfor %}
+</div>
+
+<!-- Выход -->
+<div>
+    <h2>Active User Activities</h2>
+    {% for activity in user_activities %}
+    <p class="active-activity" data-activity-id="{{ activity.id }}">
+        Cabinet Number: {{ activity.cabinet.number }} <br>
+        Started at: {{ activity.start_time }} <br>
+        Amount Due: <span id="amount_{{ activity.id }}">{{ activity.amount }} сом</span>
+    </p>
+    <!-- Форма для выхода -->
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="activity_id" value="{{ activity.id }}">
+        <button type="submit" name="checkout_action">Check Out</button>
+    </form>
+{% empty %}
+    <p>No active activities</p>
+{% endfor %}
+
+</div>
